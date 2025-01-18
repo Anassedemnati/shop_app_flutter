@@ -1,11 +1,12 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_complete_guide/models/order_line.dart';
 import 'package:intl/intl.dart';
+import '../providers/orders.dart' as ord;
+
 
 class OrderItem extends StatefulWidget {
-  final OrderLine order;
+  final ord.OrderItem order;
 
   OrderItem(this.order);
 
