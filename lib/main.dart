@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // MultiProvider is used to provide multiple providers at the same time in the app 
     return MultiProvider(
         providers: [
           ChangeNotifierProvider.value(

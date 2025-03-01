@@ -18,7 +18,8 @@ class OrderItem {
 }
 
 
-class Orders with ChangeNotifier {
+class Orders with ChangeNotifier // ChangeNotifier is a class that helps to notify the listeners about the changes in the data
+{
   List<OrderItem> _orders = [];
 
   List<OrderItem> get orders {
@@ -35,6 +36,6 @@ class Orders with ChangeNotifier {
         products: cartProducts,
       ),
     );
-    notifyListeners();
+    notifyListeners(); // This will notify the listeners about the changes in the data
   }
 }

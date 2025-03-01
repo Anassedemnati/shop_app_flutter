@@ -10,7 +10,7 @@ class OrdersScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final orderData = Provider.of<Orders>(context);
+    final orderData = Provider.of<Orders>(context);// this will listen on the orders provider and rebuild the widget when the orders change
     return Scaffold(
       appBar: AppBar(
         title: Text('Your Orders'),

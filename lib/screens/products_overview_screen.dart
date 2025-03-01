@@ -56,7 +56,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
            custom.Badge(
               key: ValueKey('badge'),
               color: Colors.red,
-              value: Provider.of<Cart>(context).itemCount.toString(),
+              value: Provider.of<Cart>(context).itemCount.toString(), 
               child: IconButton(
                 icon: Icon(
                   Icons.shopping_cart,
