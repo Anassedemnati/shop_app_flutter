@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/providers/user.dart';
+import 'package:flutter_complete_guide/screens/login_screen.dart';
+import 'package:flutter_complete_guide/screens/product_form_screen.dart';
+import 'package:flutter_complete_guide/screens/user_products_screen.dart';
+import 'package:flutter_complete_guide/screens/user_profile_screen.dart';
 import './providers/cart.dart';
 import './providers/orders.dart';
 import './providers/products.dart';
@@ -29,6 +34,10 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider.value(
             value: Orders(),
           ),
+          ChangeNotifierProvider.value(
+            value: UserProvider(), // this is the provider for the user
+          ),
+        
 
         ],
         child: MaterialApp(
@@ -44,6 +53,11 @@ class MyApp extends StatelessWidget {
               ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
               CartScreen.routeName: (ctx) => CartScreen(),
               OrdersScreen.routeName: (ctx) => OrdersScreen(),
+              UserProductsScreen.routeName: (ctx) => UserProductsScreen(),
+              ProductFormScreen.routeName: (ctx) => ProductFormScreen(),
+              UserProfileScreen.routeName: (ctx) => UserProfileScreen(),
+              LoginScreen.routeName: (ctx) => LoginScreen(), // this is the route for the login screen
+
             }));
   }
 }
