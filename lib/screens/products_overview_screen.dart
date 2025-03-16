@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/providers/products.dart';
 import 'package:provider/provider.dart';
-
 
 import '../widgets/app_drawer.dart';
 import '../widgets/products_grid.dart';
@@ -20,6 +20,33 @@ class ProductsOverviewScreen extends StatefulWidget {
 
 class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   var _showOnlyFavorites = false;
+  var _isLoading = false;
+  var _isInit = true;
+  
+  // this method is called only once when the widget is initialized
+  @override
+  void didChangeDependencies() { // this method is called when the widget is initialized and when the dependencies change
+    if (_isInit) {
+      setState(() {
+        _isLoading = true;
+      });
+      Provider.of<Products>(context).fetchProducts().then((_) {
+        setState(() {
+          _isLoading = false;
+        });
+      }).catchError((error) {
+        // Handle error, maybe show a snackbar
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('An error occurred while loading products!')),
+        );
+        setState(() {
+          _isLoading = false;
+        });
+      });
+      _isInit = false;
+    }
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,22 +68,21 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
               Icons.more_vert,
             ),
             itemBuilder: (_) => [
-                  PopupMenuItem(
-                    child: Text('Only Favorites'),
-                    value: FilterOptions.Favorites,
-                  ),
-                  PopupMenuItem(
-                    child: Text('Show All'),
-                    value: FilterOptions.All,
-                  ),
-                ],
+              PopupMenuItem(
+                child: Text('Only Favorites'),
+                value: FilterOptions.Favorites,
+              ),
+              PopupMenuItem(
+                child: Text('Show All'),
+                value: FilterOptions.All,
+              ),
+            ],
           ),
           Consumer<Cart>(
-            builder: (_, cart, ch) =>
-           custom.Badge(
+            builder: (_, cart, ch) => custom.Badge(
               key: ValueKey('badge'),
               color: Colors.red,
-              value: Provider.of<Cart>(context).itemCount.toString(), 
+              value: Provider.of<Cart>(context).itemCount.toString(),
               child: IconButton(
                 icon: Icon(
                   Icons.shopping_cart,
@@ -67,8 +93,6 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
               ),
             ),
           ),
-
-          
         ],
       ),
       drawer: AppDrawer(),
