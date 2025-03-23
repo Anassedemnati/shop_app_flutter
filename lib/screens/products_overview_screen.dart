@@ -23,6 +23,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   var _isLoading = false;
   var _isInit = true;
   
+
   // this method is called only once when the widget is initialized
   @override
   void didChangeDependencies() { // this method is called when the widget is initialized and when the dependencies change
@@ -46,6 +47,14 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
       _isInit = false;
     }
     super.didChangeDependencies();
+  }
+
+  @override
+  void initState() {
+    Future.delayed(Duration.zero).then((_) {
+      Provider.of<Products>(context, listen: false).fetchProducts();
+    });
+    super.initState();
   }
 
   @override
