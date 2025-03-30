@@ -6,6 +6,9 @@ import 'package:http/http.dart' as http;
 
 class Products with ChangeNotifier {
   static const productsUrl = 'https://ecomerceapp-4f8f8-default-rtdb.europe-west1.firebasedatabase.app/products.json';
+  final String authToken;
+
+  Products(this.authToken, this._items);
 
   // ignore: prefer_final_fields
   List<Product> _items = [
@@ -28,7 +31,7 @@ class Products with ChangeNotifier {
 
   Future<void> fetchProducts() async {
     try {
-      final response = await http.get(Uri.parse(productsUrl));
+      final response = await http.get(Uri.parse('$productsUrl?auth=$authToken')); // get request to the firebase database products collection
       final extractedData = json.decode(response.body) as Map<String, dynamic>?;
       
       if (extractedData == null) {
@@ -57,7 +60,8 @@ class Products with ChangeNotifier {
     }
   }
   void addProduct(Product value) {
-    http.post(Uri.parse(productsUrl), body: json.encode( // post request to the firebase database products collection
+    http.post(Uri.parse('$productsUrl?auth=$authToken'), // post request to the firebase database products collection
+     body: json.encode( // post request to the firebase database products collection
       {
         'title': value.title,
         'description': value.description,
